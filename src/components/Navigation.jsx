@@ -1,21 +1,25 @@
 /**
- * Navigation.jsx — Light Off-White Sidebar (Matches Screenshot #4)
+ * Navigation.jsx — Light Off-White Sidebar (Exact Match to User Screenshot)
  */
 
 import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  LayoutDashboard, PlayCircle, BookOpen, ChevronLeft, ChevronRight,
-  RotateCcw, ArrowLeft
+  LayoutDashboard, Clock, BookOpen, Target, Library, Map, User,
+  ChevronLeft, ChevronRight, RotateCcw, ArrowLeft, CheckSquare
 } from 'lucide-react'
 import { useApp } from '../store/AppContext.jsx'
 import { useBackToHome } from '../PvtAgentApp.jsx'
 
 const NAV_ITEMS = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-  { to: '/session',   icon: PlayCircle,       label: "Today's Session" },
-  { to: '/journey',   icon: BookOpen,         label: 'My Journey' },
+  { to: '/session',   icon: Clock,           label: "Today's Session" },
+  { to: '/journey',   icon: BookOpen,        label: 'Journey' },
+  { to: '/curator',   icon: Target,          label: 'Curator' },
+  { to: '/library',   icon: Library,         label: 'Library' },
+  { to: '/roadmap',   icon: Map,             label: 'Roadmap' },
+  { to: '/profile',   icon: User,            label: 'Profile' },
 ]
 
 export default function Navigation() {
@@ -31,7 +35,7 @@ export default function Navigation() {
     }
   }
 
-  const userName = profile?.name || 'neha'
+  const userName = profile?.name || 'NEha'
 
   return (
     <motion.nav
@@ -39,16 +43,16 @@ export default function Navigation() {
       transition={{ duration: 0.25, ease: 'easeInOut' }}
       style={{
         position: 'fixed', top: 0, left: 0, height: '100vh',
-        backgroundColor: '#F8F6F2',
-        borderRight: '1px solid #E5E2DC',
+        backgroundColor: '#FAF8F5',
+        borderRight: '1px solid #E8E5DF',
         display: 'flex', flexDirection: 'column',
         zIndex: 100, overflow: 'hidden',
         boxSizing: 'border-box'
       }}
     >
-      {/* Brand Logo */}
+      {/* Brand Logo Header */}
       <div style={{
-        padding: collapsed ? '20px 0' : '24px 24px 16px',
+        padding: collapsed ? '24px 0 16px' : '32px 28px 20px',
         display: 'flex', alignItems: 'center', gap: 10,
         justifyContent: collapsed ? 'center' : 'flex-start',
       }}>
@@ -62,10 +66,10 @@ export default function Navigation() {
             >
               <span style={{
                 fontFamily: 'Inter, -apple-system, sans-serif',
-                fontSize: 22,
+                fontSize: 26,
                 fontWeight: 900,
                 color: '#111111',
-                letterSpacing: '-0.5px',
+                letterSpacing: '-0.8px',
                 textTransform: 'uppercase'
               }}>
                 BECOME
@@ -75,61 +79,71 @@ export default function Navigation() {
         </AnimatePresence>
       </div>
 
-      {/* User Info Header */}
-      {profile && (
+      {/* User Avatar & Info Section */}
+      <div style={{
+        padding: collapsed ? '12px 0 16px' : '12px 28px 20px',
+        display: 'flex', alignItems: 'center', gap: 14,
+        justifyContent: collapsed ? 'center' : 'flex-start',
+      }}>
         <div style={{
-          padding: collapsed ? '12px 0' : '16px 24px',
-          display: 'flex', alignItems: 'center', gap: 12,
-          justifyContent: collapsed ? 'center' : 'flex-start',
-          marginBottom: 8,
+          width: 40, height: 40, borderRadius: '50%',
+          backgroundColor: '#111111',
+          color: '#FFFFFF',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          flexShrink: 0, fontSize: 15, fontWeight: 700,
         }}>
-          <div style={{
-            width: 34, height: 34, borderRadius: '50%',
-            backgroundColor: '#111111',
-            color: '#FFFFFF',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            flexShrink: 0, fontSize: 14, fontWeight: 700,
-          }}>
-            {userName[0].toUpperCase()}
-          </div>
-          <AnimatePresence>
-            {!collapsed && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
-                <div style={{ fontSize: 14, fontWeight: 700, color: '#111111', lineHeight: 1.2 }}>
-                  {userName}
-                </div>
-                <div style={{ fontSize: 11, color: '#777777', marginTop: 2 }}>
-                  Growth Curator
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {userName[0]?.toUpperCase() || 'N'}
         </div>
-      )}
+        <AnimatePresence>
+          {!collapsed && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
+              <div style={{ fontSize: 15, fontWeight: 700, color: '#111111', lineHeight: 1.2 }}>
+                {userName}
+              </div>
+              <div style={{ fontSize: 12, color: '#777777', marginTop: 2, fontWeight: 400 }}>
+                Growth Curator
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
-      {/* Nav Links */}
-      <div style={{ flex: 1, padding: '8px 12px', overflowY: 'auto' }}>
+      {/* Nav Items List */}
+      <div style={{ flex: 1, padding: '8px 16px', overflowY: 'auto' }}>
         {NAV_ITEMS.map(({ to, icon: Icon, label }) => (
           <NavLink
             key={to}
             to={to}
             style={({ isActive }) => ({
-              display: 'flex', alignItems: 'center', gap: 12,
-              padding: collapsed ? '12px 0' : '11px 16px',
+              display: 'flex', alignItems: 'center', gap: 14,
+              padding: collapsed ? '12px 0' : '12px 18px',
               justifyContent: collapsed ? 'center' : 'flex-start',
-              margin: '3px 0', borderRadius: 12,
+              margin: '4px 0', borderRadius: 14,
               textDecoration: 'none', transition: 'all 0.18s ease',
-              background: isActive ? '#FFFFFF' : 'transparent',
-              color: isActive ? '#111111' : '#666666',
-              boxShadow: isActive ? '0 2px 8px rgba(0,0,0,0.04)' : 'none',
-              border: isActive ? '1px solid #E5E2DC' : '1px solid transparent',
-              fontWeight: isActive ? 600 : 500,
-              fontSize: 13,
+              background: isActive ? '#EFECE6' : 'transparent',
+              color: isActive ? '#111111' : '#333333',
+              fontWeight: isActive ? 700 : 500,
+              fontSize: 14,
             })}
           >
             {({ isActive }) => (
               <>
-                <Icon size={17} strokeWidth={isActive ? 2.2 : 1.7} style={{ flexShrink: 0, color: isActive ? '#111111' : '#777777' }} />
+                <div style={{
+                  width: 22, height: 22,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  flexShrink: 0
+                }}>
+                  {isActive ? (
+                    <div style={{
+                      width: 20, height: 20, borderRadius: 6, backgroundColor: '#111111',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF'
+                    }}>
+                      <Icon size={12} strokeWidth={2.5} />
+                    </div>
+                  ) : (
+                    <Icon size={18} strokeWidth={1.8} style={{ color: '#222222' }} />
+                  )}
+                </div>
                 <AnimatePresence>
                   {!collapsed && (
                     <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
@@ -143,32 +157,10 @@ export default function Navigation() {
         ))}
       </div>
 
-      {/* AI Curator Badge Box at Bottom Left */}
-      {!collapsed && (
-        <div style={{ padding: '0 16px 16px', position: 'relative' }}>
-          <div style={{
-            position: 'relative',
-            padding: '12px',
-            backgroundColor: '#FFFFFF',
-            border: '1px solid #E5E2DC',
-            borderRadius: 14,
-            boxShadow: '0 2px 6px rgba(0,0,0,0.02)',
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
-              <span style={{ fontSize: 11, fontWeight: 700, color: '#111111' }}>AI Curator</span>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#10B981' }} />
-            </div>
-            <p style={{ fontSize: 10, color: '#777777', margin: 0, lineHeight: 1.4 }}>
-              Always learning.<br/>Always with you.
-            </p>
-          </div>
-        </div>
-      )}
-
       {/* Bottom Footer Actions */}
       <div style={{
-        padding: collapsed ? '12px 0' : '12px 16px',
-        borderTop: '1px solid #E5E2DC',
+        padding: collapsed ? '12px 0' : '14px 20px',
+        borderTop: '1px solid #E8E5DF',
         display: 'flex',
         justifyContent: collapsed ? 'center' : 'space-between',
         alignItems: 'center',
@@ -184,7 +176,7 @@ export default function Navigation() {
               borderRadius: 8,
               color: '#333333',
               cursor: 'pointer',
-              padding: '6px 10px',
+              padding: '6px 12px',
               display: 'flex', alignItems: 'center', gap: 6,
               fontSize: 12, fontWeight: 600,
               transition: 'all 0.15s',
