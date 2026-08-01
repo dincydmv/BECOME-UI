@@ -22,11 +22,11 @@ export default function Hero({ onOpenModal, onOpenDemo }) {
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#EBE7DF]/50 rounded-full blur-3xl -z-10 pointer-events-none" />
 
       {/* Blurred Creation of Adam Hands Background Artwork Layer */}
-      <div className="absolute inset-0 top-12 flex items-center justify-center pointer-events-none -z-10 overflow-hidden px-4">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-10 overflow-hidden px-4">
         <img
           src="/bg-artwork.png"
           alt="Hands Touching Creation of Adam Background"
-          className="w-full max-w-5xl h-auto max-h-[500px] object-contain filter blur-[6px] md:blur-[10px] opacity-45 grayscale contrast-125 scale-110 select-none"
+          className="w-full max-w-6xl h-auto max-h-[600px] object-contain opacity-60 grayscale contrast-110 scale-105 select-none"
         />
       </div>
 
