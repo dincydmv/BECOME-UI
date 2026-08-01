@@ -17,37 +17,53 @@ import VideoDemoModal from './components/VideoDemoModal';
 import PvtAgentApp from './PvtAgentApp.jsx';
 
 export default function App() {
-  const [currentView, setCurrentView] = useState('landing'); // Opens directly to the initial Landing page with Hero!
+  const [currentView, setCurrentView] = useState('landing'); // Initial Landing page with Hero
+  const [initialAgentRoute, setInitialAgentRoute] = useState('/onboarding'); // Personalisation onboarding first
   const [isDemoOpen, setIsDemoOpen] = useState(false);
   const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
 
-  const handleOpenDashboard = () => {
+  // Stage 1 -> Stage 2: Click "Start Your Journey" on Landing Page opens Personalisation Onboarding!
+  const handleStartPersonalisation = () => {
+    setInitialAgentRoute('/onboarding');
     setCurrentView('agent');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Direct open Dashboard (e.g. from nav link if profile exists)
+  const handleOpenDashboard = () => {
+    setInitialAgentRoute('/dashboard');
+    setCurrentView('agent');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Return to Stage 1: Landing page with Hero
   const handleBackToHome = () => {
     setCurrentView('landing');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // When agent view is active → render pvt-agent app
+  // When agent view is active → render pvt-agent app starting at Personalisation or Dashboard
   if (currentView === 'agent') {
-    return <PvtAgentApp onBackToHome={handleBackToHome} />;
+    return (
+      <PvtAgentApp
+        onBackToHome={handleBackToHome}
+        initialRoute={initialAgentRoute}
+      />
+    );
   }
 
-  // Render initial landing page with Hero section
+  // Stage 1: Render initial landing page with Hero section
   return (
     <div className="min-h-screen bg-[#F6F4EF] text-[#111111] font-sans relative selection:bg-black selection:text-white">
       <div className="paper-grain" />
 
       <Navbar
-        onOpenModal={handleOpenDashboard}
+        onOpenModal={handleStartPersonalisation}
         onOpenDashboard={handleOpenDashboard}
       />
 
       <Hero
-        onOpenModal={handleOpenDashboard}
+        onOpenModal={handleStartPersonalisation}
         onOpenDemo={() => setIsDemoOpen(true)}
       />
 
@@ -56,10 +72,10 @@ export default function App() {
       <IdentityTimeline />
       <PersonalAITeam />
       <ReasoningEngine />
-      <HowItWorks onOpenModal={handleOpenDashboard} />
-      <PricingSection onOpenModal={handleOpenDashboard} />
-      <FinalCTA onOpenModal={handleOpenDashboard} />
-      <Footer onOpenModal={handleOpenDashboard} />
+      <HowItWorks onOpenModal={handleStartPersonalisation} />
+      <PricingSection onOpenModal={handleStartPersonalisation} />
+      <FinalCTA onOpenModal={handleStartPersonalisation} />
+      <Footer onOpenModal={handleStartPersonalisation} />
 
       <OnboardingModal
         isOpen={isOnboardingOpen}
