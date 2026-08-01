@@ -3,9 +3,5 @@ node_modules
 .env.local
 .env.*.local
 dist
-agent/node_modules
-agent/.env
-agent/.env.local
-agent/dist
 .DS_Store
 Thumbs.db
