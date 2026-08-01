@@ -26,7 +26,12 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // When "Start Your Journey" / any CTA is clicked → render pvt-agent app
+  const handleBackToHome = () => {
+    setCurrentView('landing');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // When any CTA is clicked → render pvt-agent app
   if (currentView === 'agent') {
     return <PvtAgentApp onBackToHome={handleBackToHome} />;
   }
