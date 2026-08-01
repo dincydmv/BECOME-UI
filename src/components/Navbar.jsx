@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Sparkles, ArrowRight, Menu, X } from 'lucide-react';
 
-export default function Navbar({ onOpenModal }) {
+export default function Navbar({ onOpenModal, onOpenDashboard }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -20,7 +20,7 @@ export default function Navbar({ onOpenModal }) {
   const navLinks = [
     { name: 'How It Works', href: '#how-it-works' },
     { name: 'AI Curator', href: '#curator' },
-    { name: 'Dashboard', href: '#dashboard' },
+    { name: 'Dashboard', href: '#dashboard', onClick: onOpenDashboard },
     { name: 'Roadmap', href: '#roadmap' },
     { name: 'AI Team', href: '#ai-team' },
     { name: 'Pricing', href: '#pricing' },
@@ -51,7 +51,13 @@ export default function Navbar({ onOpenModal }) {
             <a
               key={link.name}
               href={link.href}
-              className="text-sm font-medium text-[#6E6E6E] hover:text-[#111111] transition-colors duration-200"
+              onClick={(e) => {
+                if (link.onClick) {
+                  e.preventDefault();
+                  link.onClick();
+                }
+              }}
+              className="text-sm font-medium text-[#6E6E6E] hover:text-[#111111] transition-colors duration-200 cursor-pointer"
             >
               {link.name}
             </a>
@@ -61,13 +67,13 @@ export default function Navbar({ onOpenModal }) {
         {/* Right CTA Actions */}
         <div className="hidden md:flex items-center gap-5">
           <button
-            onClick={onOpenModal}
+            onClick={onOpenDashboard || onOpenModal}
             className="text-sm font-medium text-[#111111] hover:text-[#6E6E6E] transition-colors duration-200 px-3 py-1"
           >
             Login
           </button>
           <button
-            onClick={onOpenModal}
+            onClick={onOpenDashboard || onOpenModal}
             className="btn-pill-primary px-6 py-2.5 text-sm font-medium flex items-center gap-2 group cursor-pointer"
           >
             <span>Start Growing</span>
