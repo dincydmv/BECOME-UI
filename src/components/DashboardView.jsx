@@ -64,7 +64,7 @@ export default function DashboardView({ onBackToHome }) {
   // Floating AI Assistant Chat
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState([
-    { sender: 'ai', text: 'Hello Neha! I am your FutureSelf Curator. How can I accelerate your growth today?' }
+    { sender: 'ai', text: 'Hello Neha! I am your Become AI Curator. How can I accelerate your growth today?' }
   ]);
   const [chatInput, setChatInput] = useState('');
 
@@ -303,7 +303,7 @@ export default function DashboardView({ onBackToHome }) {
                 onClick={onBackToHome}
                 className="cursor-pointer font-editorial text-xl font-bold tracking-tight hover:opacity-80 transition-opacity"
               >
-                FutureSelf <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-black/10 uppercase border border-black/10">AI</span>
+                Become <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-black/10 uppercase border border-black/10">AI</span>
               </div>
             )}
             <button 
@@ -926,7 +926,7 @@ export default function DashboardView({ onBackToHome }) {
             <div className="p-4 bg-black text-white flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-yellow-400" />
-                <span className="font-bold text-xs">FutureSelf AI Curator</span>
+                <span className="font-bold text-xs">Become AI Curator</span>
               </div>
               <button onClick={() => setIsChatOpen(false)} className="p-1 rounded-full hover:bg-white/20">
                 <X className="w-4 h-4" />
@@ -1118,7 +1118,7 @@ export default function DashboardView({ onBackToHome }) {
                 <input 
                   autoFocus
                   type="text"
-                  placeholder="Search FutureSelf AI (e.g. Deep Work, Habits, Podcasts)..."
+                  placeholder="Search Become AI (e.g. Deep Work, Habits, Podcasts)..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="flex-1 bg-transparent text-sm font-semibold text-[#111111] placeholder:text-[#6E6E6E] focus:outline-none"
