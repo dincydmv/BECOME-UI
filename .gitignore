@@ -1,11 +1,36 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
 node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Environment files — NEVER commit real API keys
 .env
 .env.local
+.env.production
 .env.*.local
-dist
-agent/node_modules
-agent/.env
-agent/.env.local
-agent/dist
-.DS_Store
-Thumbs.db
+
+# Nested pvt-agent project — already integrated into src/
+pvt-agent/
+
+# Agent folder — already integrated into src/
+agent/
