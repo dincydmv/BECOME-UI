@@ -1,14 +1,14 @@
 /**
  * AgentThinking.jsx — Animated "agent is reasoning" overlay
+ * Styled in crisp black text and black accent icons matching light off-white theme.
  */
 
 import React, { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Brain, Sparkles } from 'lucide-react'
+import { Brain } from 'lucide-react'
 
 export default function AgentThinking({ steps = [], onComplete }) {
   const [currentStep, setCurrentStep] = useState(0)
-  const [done, setDone] = useState(false)
 
   useEffect(() => {
     if (!steps.length) return
@@ -16,7 +16,6 @@ export default function AgentThinking({ steps = [], onComplete }) {
     let idx = 0
     const advance = () => {
       if (idx >= steps.length) {
-        setDone(true)
         setTimeout(() => onComplete?.(), 400)
         return
       }
@@ -36,8 +35,9 @@ export default function AgentThinking({ steps = [], onComplete }) {
       alignItems: 'center',
       justifyContent: 'center',
       minHeight: '60vh',
-      gap: 40,
+      gap: 36,
       padding: '40px 20px',
+      color: '#111111',
     }}>
       {/* Animated orb */}
       <div style={{ position: 'relative', width: 120, height: 120 }}>
@@ -49,7 +49,7 @@ export default function AgentThinking({ steps = [], onComplete }) {
             position: 'absolute',
             inset: 0,
             borderRadius: '50%',
-            border: '1.5px dashed rgba(16,185,129,0.3)',
+            border: '1.5px dashed rgba(17,17,17,0.3)',
           }}
         />
         {/* Middle ring */}
@@ -60,16 +60,16 @@ export default function AgentThinking({ steps = [], onComplete }) {
             position: 'absolute',
             inset: 16,
             borderRadius: '50%',
-            border: '1.5px dashed rgba(139,92,246,0.3)',
+            border: '1.5px dashed rgba(17,17,17,0.2)',
           }}
         />
         {/* Core */}
         <motion.div
           animate={{
             boxShadow: [
-              '0 0 20px rgba(16,185,129,0.3)',
-              '0 0 50px rgba(16,185,129,0.5)',
-              '0 0 20px rgba(16,185,129,0.3)',
+              '0 0 20px rgba(0,0,0,0.06)',
+              '0 0 35px rgba(0,0,0,0.12)',
+              '0 0 20px rgba(0,0,0,0.06)',
             ]
           }}
           transition={{ duration: 2, repeat: Infinity }}
@@ -77,14 +77,14 @@ export default function AgentThinking({ steps = [], onComplete }) {
             position: 'absolute',
             inset: 28,
             borderRadius: '50%',
-            background: 'linear-gradient(135deg, rgba(16,185,129,0.2), rgba(139,92,246,0.2))',
-            border: '1px solid rgba(16,185,129,0.4)',
+            background: '#FFFFFF',
+            border: '1.5px solid #111111',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
           }}
         >
-          <Brain size={24} color="#10B981" />
+          <Brain size={26} color="#111111" />
         </motion.div>
 
         {/* Orbiting dots */}
@@ -106,9 +106,8 @@ export default function AgentThinking({ steps = [], onComplete }) {
               width: 6 - i,
               height: 6 - i,
               borderRadius: '50%',
-              background: ['#10B981', '#8B5CF6', '#F59E0B'][i],
+              background: '#111111',
               transform: 'translateX(-50%)',
-              boxShadow: `0 0 6px ${['#10B981', '#8B5CF6', '#F59E0B'][i]}`,
             }} />
           </motion.div>
         ))}
@@ -117,77 +116,78 @@ export default function AgentThinking({ steps = [], onComplete }) {
       {/* Title */}
       <div style={{ textAlign: 'center' }}>
         <h2 style={{
-          fontFamily: 'DM Serif Display, serif',
-          fontSize: 28,
-          color: 'rgba(255,255,255,0.9)',
+          fontFamily: 'Inter, -apple-system, sans-serif',
+          fontSize: 26,
+          fontWeight: 800,
+          color: '#111111',
           marginBottom: 8,
+          letterSpacing: '-0.5px'
         }}>
           Curating Your Growth Path
         </h2>
-        <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 14 }}>
+        <p style={{ color: '#555555', fontSize: 14, margin: 0 }}>
           Analyzing your journey • Selecting the right content • Crafting your recommendations
         </p>
       </div>
 
-      {/* Steps */}
+      {/* Steps List */}
       <div style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: 8,
+        gap: 10,
         width: '100%',
-        maxWidth: 420,
+        maxWidth: 460,
       }}>
         {steps.map((step, idx) => (
           <AnimatePresence key={idx}>
             {idx <= currentStep && (
               <motion.div
-                initial={{ opacity: 0, x: -12 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3 }}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.25 }}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: 10,
-                  padding: '10px 14px',
-                  borderRadius: 10,
-                  background: idx === currentStep
-                    ? 'rgba(16,185,129,0.1)'
-                    : 'rgba(255,255,255,0.03)',
-                  border: `1px solid ${idx === currentStep ? 'rgba(16,185,129,0.3)' : 'rgba(255,255,255,0.06)'}`,
+                  gap: 12,
+                  padding: '12px 16px',
+                  borderRadius: 14,
+                  background: idx === currentStep ? '#FFFFFF' : '#FAFAFA',
+                  border: `1.5px solid ${idx === currentStep ? '#111111' : '#E8E5DF'}`,
+                  boxShadow: idx === currentStep ? '0 4px 12px rgba(0,0,0,0.04)' : 'none',
                 }}
               >
                 {idx < currentStep ? (
                   <div style={{
-                    width: 18,
-                    height: 18,
+                    width: 20,
+                    height: 20,
                     borderRadius: '50%',
-                    background: 'rgba(16,185,129,0.2)',
-                    border: '1.5px solid #10B981',
+                    background: '#111111',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     flexShrink: 0,
                   }}>
                     <svg width="10" height="10" viewBox="0 0 10 10">
-                      <path d="M2 5l2.5 2.5L8 3" stroke="#10B981" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M2 5l2.5 2.5L8 3" stroke="#FFFFFF" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
                 ) : (
-                  <div style={{ display: 'flex', gap: 3, flexShrink: 0 }}>
+                  <div style={{ display: 'flex', gap: 4, flexShrink: 0 }}>
                     {[0, 1, 2].map(d => (
                       <div key={d} className="thinking-dot" style={{
-                        width: 4,
-                        height: 4,
+                        width: 5,
+                        height: 5,
                         borderRadius: '50%',
-                        background: '#10B981',
+                        background: '#111111',
                       }} />
                     ))}
                   </div>
                 )}
                 <span style={{
                   fontSize: 13,
-                  color: idx === currentStep ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.4)',
-                  fontWeight: idx === currentStep ? 500 : 400,
+                  color: '#111111',
+                  fontWeight: idx === currentStep ? 600 : 500,
+                  lineHeight: 1.4,
                 }}>
                   {step.step}
                 </span>

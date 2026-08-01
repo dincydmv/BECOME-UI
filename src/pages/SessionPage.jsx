@@ -1,11 +1,12 @@
 /**
  * SessionPage.jsx — Curation session experience
  * Triggers the Growth Curator Agent's reasoning pipeline and renders recommendations.
+ * Styled in crisp black text and black accent icons matching light off-white theme.
  */
 
 import React, { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Sparkles, RefreshCw, CheckCircle, ArrowLeft } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { RefreshCw, ArrowLeft } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../store/AppContext.jsx'
 import { runGrowthAgent } from '../services/growthAgent.js'
@@ -15,7 +16,7 @@ import PageTransition from '../components/PageTransition.jsx'
 
 export default function SessionPage() {
   const navigate = useNavigate()
-  const { profile, growthState, completeRecommendation, skipRecommendation, refreshGrowthState } = useApp()
+  const { profile, growthState, completeRecommendation, skipRecommendation } = useApp()
 
   const [loading, setLoading] = useState(true)
   const [sessionData, setSessionData] = useState(null)
@@ -66,8 +67,8 @@ export default function SessionPage() {
     return (
       <PageTransition>
         <div className="page-inner" style={{ textAlign: 'center', paddingTop: 100 }}>
-          <RefreshCw size={32} color="#10B981" className="animate-spin-slow" />
-          <p style={{ marginTop: 16, color: 'rgba(255,255,255,0.5)' }}>Initializing Curator Agent...</p>
+          <RefreshCw size={32} color="#111111" className="animate-spin-slow" style={{ margin: '0 auto' }} />
+          <p style={{ marginTop: 16, color: '#555555', fontWeight: 600, fontSize: 14 }}>Initializing Curator Agent...</p>
         </div>
       </PageTransition>
     )
@@ -77,22 +78,46 @@ export default function SessionPage() {
 
   return (
     <PageTransition>
-      <div className="page-inner">
+      <div className="page-inner" style={{ maxWidth: 1080, margin: '0 auto', padding: '24px 32px 60px' }}>
 
         {/* Back & Title */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 28 }}>
           <button
             onClick={() => navigate('/dashboard')}
-            className="btn-ghost"
-            style={{ padding: '8px 14px', fontSize: 13 }}
+            type="button"
+            style={{
+              padding: '8px 16px',
+              fontSize: 13,
+              fontWeight: 600,
+              backgroundColor: '#FFFFFF',
+              color: '#111111',
+              border: '1px solid #E0DDD6',
+              borderRadius: 999,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+            }}
           >
             <ArrowLeft size={14} />
             Dashboard
           </button>
           <button
             onClick={loadSession}
-            className="btn-ghost"
-            style={{ padding: '8px 14px', fontSize: 13 }}
+            type="button"
+            style={{
+              padding: '8px 16px',
+              fontSize: 13,
+              fontWeight: 600,
+              backgroundColor: '#FFFFFF',
+              color: '#111111',
+              border: '1px solid #E0DDD6',
+              borderRadius: 999,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+            }}
           >
             <RefreshCw size={14} />
             Recurate Session
@@ -104,37 +129,37 @@ export default function SessionPage() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           style={{
-            padding: '28px 32px',
-            background: 'rgba(255,255,255,0.03)',
-            border: '1px solid rgba(255,255,255,0.08)',
-            borderRadius: 20,
+            padding: '32px 36px',
+            backgroundColor: '#FFFFFF',
+            border: '1px solid #E8E5DF',
+            borderRadius: 24,
             marginBottom: 32,
+            boxShadow: '0 2px 10px rgba(0,0,0,0.02)',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
             <span style={{
-              padding: '4px 10px',
+              padding: '5px 12px',
               borderRadius: 999,
               fontSize: 11,
               fontWeight: 700,
               letterSpacing: '0.5px',
               textTransform: 'uppercase',
-              background: 'rgba(16,185,129,0.12)',
-              color: '#10B981',
-              border: '1px solid rgba(16,185,129,0.3)',
+              backgroundColor: '#111111',
+              color: '#FFFFFF',
             }}>
               Intervention: {reasoning.interventionType}
             </span>
-            <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>
+            <span style={{ fontSize: 13, color: '#666666', fontWeight: 500 }}>
               Stage: {reasoning.identityStage} · Trust Score: {reasoning.trustScore}
             </span>
           </div>
 
-          <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 32, color: 'rgba(255,255,255,0.95)', marginBottom: 12 }}>
+          <h1 style={{ fontFamily: 'Inter, -apple-system, sans-serif', fontSize: 32, fontWeight: 800, color: '#111111', marginBottom: 12, letterSpacing: '-0.5px' }}>
             {reasoning.sessionTitle}
           </h1>
 
-          <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: 15, lineHeight: 1.6, maxWidth: 680 }}>
+          <p style={{ color: '#555555', fontSize: 15, lineHeight: 1.6, maxWidth: 720, margin: 0 }}>
             {reasoning.sessionMessage}
           </p>
         </motion.div>
@@ -142,57 +167,49 @@ export default function SessionPage() {
         {/* Recommendations List */}
         {recs.length > 0 ? (
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-              <h2 style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                Today's Curated Recommendations ({recs.length} remaining)
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
+              <h2 style={{ fontSize: 12, fontWeight: 700, fontFamily: 'monospace', color: '#888888', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                TODAY'S CURATED RECOMMENDATIONS ({recs.length} REMAINING)
               </h2>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-              <AnimatePresence>
-                {recs.map((rec, idx) => (
-                  <RecommendationCard
-                    key={rec.id}
-                    rec={rec}
-                    index={idx}
-                    interventionType={reasoning.interventionType}
-                    onComplete={handleComplete}
-                    onSkip={handleSkip}
-                  />
-                ))}
-              </AnimatePresence>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+              {recs.map((rec, idx) => (
+                <RecommendationCard
+                  key={rec.id}
+                  rec={rec}
+                  index={idx}
+                  onComplete={() => handleComplete(rec)}
+                  onSkip={() => handleSkip(rec)}
+                  interventionType={reasoning.interventionType}
+                />
+              ))}
             </div>
           </div>
         ) : (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            style={{
-              padding: '48px 32px',
-              textAlign: 'center',
-              background: 'rgba(16,185,129,0.05)',
-              border: '1px solid rgba(16,185,129,0.2)',
-              borderRadius: 24,
-            }}
-          >
-            <div style={{ fontSize: 48, marginBottom: 16 }}>🌱</div>
-            <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 28, color: 'rgba(255,255,255,0.95)', marginBottom: 8 }}>
-              Session Complete!
-            </h2>
-            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 15, maxWidth: 460, margin: '0 auto 24px', lineHeight: 1.6 }}>
-              You've engaged with all recommendations for this session. Your trust score and growth state have been updated.
+          <div style={{
+            padding: '48px',
+            textAlign: 'center',
+            backgroundColor: '#FFFFFF',
+            border: '1px solid #E8E5DF',
+            borderRadius: 24,
+          }}>
+            <h3 style={{ fontSize: 20, fontWeight: 700, color: '#111111', marginBottom: 8 }}>
+              All recommendations completed! 🎉
+            </h3>
+            <p style={{ color: '#666666', fontSize: 14, marginBottom: 24 }}>
+              Great job taking action on your growth journey today.
             </p>
-            <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
-              <button onClick={() => navigate('/dashboard')} className="btn-primary">
-                Return to Dashboard
-              </button>
-              <button onClick={loadSession} className="btn-ghost">
-                Generate New Session
-              </button>
-            </div>
-          </motion.div>
+            <button
+              onClick={() => navigate('/dashboard')}
+              type="button"
+              className="btn-primary"
+              style={{ padding: '12px 24px' }}
+            >
+              Return to Dashboard
+            </button>
+          </div>
         )}
-
       </div>
     </PageTransition>
   )
