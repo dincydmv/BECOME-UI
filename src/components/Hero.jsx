@@ -32,17 +32,6 @@ export default function Hero({ onOpenModal, onOpenDemo }) {
 
       <div className="max-w-6xl mx-auto text-center flex flex-col items-center">
         
-        {/* Top Minimal Pill Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-black/15 bg-[#F6F4EF]/80 text-[#111111] text-xs uppercase tracking-widest font-semibold mb-8 backdrop-blur-sm"
-        >
-          <Sparkles className="w-3.5 h-3.5 text-black" />
-          <span>The Personal Growth AI Engine</span>
-        </motion.div>
-
         {/* Massive Bold Condensed Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 25 }}
@@ -84,7 +73,7 @@ export default function Hero({ onOpenModal, onOpenDemo }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 w-full sm:w-auto"
+          className="flex items-center justify-center gap-4 mb-8 w-full sm:w-auto"
         >
           <button
             onClick={onOpenModal}
@@ -93,47 +82,6 @@ export default function Hero({ onOpenModal, onOpenDemo }) {
             <span>Start Your Journey</span>
             <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
           </button>
-
-          <button
-            onClick={onOpenDemo}
-            className="w-full sm:w-auto btn-pill-secondary px-8 py-4 text-base font-semibold flex items-center justify-center gap-3 group cursor-pointer"
-          >
-            <div className="w-6 h-6 rounded-full bg-black/10 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
-              <Play className="w-3 h-3 fill-current ml-0.5" />
-            </div>
-            <span>Watch Demo</span>
-          </button>
-        </motion.div>
-
-
-
-        {/* Under Hero - Trusted Resources Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="w-full max-w-6xl pt-8 border-t border-black/10"
-        >
-          <p className="text-xs uppercase tracking-widest font-semibold text-[#6E6E6E] mb-8">
-            Curates Insights From Trusted Global Knowledge Sources
-          </p>
-
-          <div className="grid grid-cols-2 sm:grid-cols-5 md:grid-cols-10 gap-6 items-center justify-center opacity-70 hover:opacity-100 transition-opacity duration-300">
-            {trustedResources.map((item) => (
-              <div
-                key={item.name}
-                className="flex flex-col items-center justify-center p-2 rounded-lg hover:bg-black/5 transition-colors group cursor-default"
-              >
-                <span className="font-editorial text-sm font-bold tracking-tight text-[#111111] group-hover:scale-105 transition-transform text-center">
-                  {item.name}
-                </span>
-                <span className="text-[10px] font-mono text-[#6E6E6E] uppercase tracking-wider">
-                  {item.type}
-                </span>
-              </div>
-            ))}
-          </div>
         </motion.div>
 
       </div>

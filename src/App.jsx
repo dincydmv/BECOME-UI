@@ -7,7 +7,6 @@ import IdentityTimeline from './components/IdentityTimeline';
 import PersonalAITeam from './components/PersonalAITeam';
 import ReasoningEngine from './components/ReasoningEngine';
 import HowItWorks from './components/HowItWorks';
-import Testimonials from './components/Testimonials';
 import PricingSection from './components/PricingSection';
 import FinalCTA from './components/FinalCTA';
 import Footer from './components/Footer';
@@ -49,9 +48,6 @@ export default function App() {
 
       {/* Section 7: How It Works */}
       <HowItWorks onOpenModal={() => setIsOnboardingOpen(true)} />
-
-      {/* Section 8: Testimonials */}
-      <Testimonials />
 
       {/* Pricing Section */}
       <PricingSection onOpenModal={() => setIsOnboardingOpen(true)} />
