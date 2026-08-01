@@ -1,13 +1,14 @@
 /**
- * OnboardingPage.jsx — Multi-step onboarding experience
+ * OnboardingPage.jsx — Centered Minimalist Editorial Off-White Onboarding Experience
+ * Exactly matches the design aesthetics of Screenshot 2 and spans 100% of the screen with matching off-white background.
  */
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import {
-  ArrowRight, ArrowLeft, Check, Leaf, Sparkles,
-  User, Target, Brain, Monitor
+  ArrowRight, ArrowLeft, Check, Sparkles,
+  User, Target, Brain, Monitor, Leaf
 } from 'lucide-react'
 import { useApp } from '../store/AppContext.jsx'
 import { updateGrowthState } from '../services/storage.js'
@@ -27,29 +28,29 @@ const TARGET_TRAIT_OPTIONS = [
 ]
 
 const LEARNING_STYLE_OPTIONS = [
-  { id: 'visual', label: 'Visual', emoji: '👁️', desc: 'I learn by seeing — diagrams, videos, illustrations' },
-  { id: 'auditory', label: 'Auditory', emoji: '🎧', desc: 'I learn by listening — podcasts, discussions' },
-  { id: 'reading', label: 'Reading', emoji: '📖', desc: 'I learn by reading — books, articles, long-form' },
-  { id: 'kinesthetic', label: 'Doing', emoji: '⚡', desc: 'I learn by applying — exercises, challenges, action' },
+  { id: 'visual', label: 'Visual', emoji: '👁️', desc: 'Diagrams, videos, illustrations' },
+  { id: 'auditory', label: 'Auditory', emoji: '🎧', desc: 'Podcasts, discussions, audio' },
+  { id: 'reading', label: 'Reading', emoji: '📖', desc: 'Books, articles, long-form' },
+  { id: 'kinesthetic', label: 'Doing', emoji: '⚡', desc: 'Exercises, challenges, action' },
 ]
 
 const MEDIA_OPTIONS = [
-  { id: 'video', label: 'Short Videos', emoji: '🎬', desc: '5-20 minutes, visual, fast-paced' },
-  { id: 'podcast', label: 'Podcasts', emoji: '🎙️', desc: 'Deep conversations, long-form audio' },
-  { id: 'book', label: 'Books', emoji: '📚', desc: 'Comprehensive, structured learning' },
+  { id: 'video', label: 'Short Videos', emoji: '🎬', desc: '5-20 minutes, fast-paced' },
+  { id: 'podcast', label: 'Podcasts', emoji: '🎙️', desc: 'Deep conversations, long-form' },
+  { id: 'book', label: 'Books', emoji: '📚', desc: 'Comprehensive learning' },
   { id: 'article', label: 'Articles', emoji: '✍️', desc: 'Quick reads, specific insights' },
 ]
 
 const LENGTH_OPTIONS = [
-  { id: 'short', label: 'Short', emoji: '⚡', desc: 'Under 15 minutes' },
-  { id: 'medium', label: 'Medium', emoji: '🌿', desc: '15-45 minutes' },
-  { id: 'long', label: 'Long', emoji: '🌊', desc: '45+ minutes, deep dives' },
+  { id: 'short', label: 'Short', emoji: '⚡', desc: '< 15 mins' },
+  { id: 'medium', label: 'Medium', emoji: '🌿', desc: '15-45 mins' },
+  { id: 'long', label: 'Long', emoji: '🌊', desc: '45+ mins' },
 ]
 
-// ─── STEP COMPONENTS ─────────────────────────────────────────────────────────
+// ─── HELPER COMPONENTS ────────────────────────────────────────────────────────
 
 const TagCloud = ({ options, selected, onToggle, max = null }) => (
-  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 20, justifyContent: 'center' }}>
     {options.map(opt => {
       const isSelected = selected.includes(opt)
       const isDisabled = max && !isSelected && selected.length >= max
@@ -57,10 +58,25 @@ const TagCloud = ({ options, selected, onToggle, max = null }) => (
         <button
           key={opt}
           onClick={() => !isDisabled && onToggle(opt)}
-          className={`tag-option ${isSelected ? 'selected' : ''}`}
-          style={{ opacity: isDisabled ? 0.4 : 1, cursor: isDisabled ? 'not-allowed' : 'pointer' }}
+          type="button"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6,
+            padding: '10px 18px',
+            borderRadius: 999,
+            fontSize: 13,
+            fontWeight: 500,
+            cursor: isDisabled ? 'not-allowed' : 'pointer',
+            opacity: isDisabled ? 0.4 : 1,
+            transition: 'all 0.18s ease',
+            background: isSelected ? '#111111' : '#FFFFFF',
+            color: isSelected ? '#FFFFFF' : '#333333',
+            border: isSelected ? '1px solid #111111' : '1px solid #E5E2DC',
+            boxShadow: isSelected ? '0 2px 8px rgba(0,0,0,0.1)' : '0 1px 3px rgba(0,0,0,0.03)',
+          }}
         >
-          {isSelected && <Check size={11} />}
+          {isSelected && <Check size={13} strokeWidth={2.5} />}
           {opt}
         </button>
       )
@@ -69,45 +85,47 @@ const TagCloud = ({ options, selected, onToggle, max = null }) => (
 )
 
 const CardGrid = ({ options, selected, onToggle, multi = false }) => (
-  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 10 }}>
+  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 12, marginTop: 20 }}>
     {options.map(opt => {
       const isSelected = multi ? selected.includes(opt.id) : selected === opt.id
       return (
         <button
           key={opt.id}
           onClick={() => onToggle(opt.id)}
+          type="button"
           style={{
-            padding: '16px',
-            background: isSelected ? 'rgba(16,185,129,0.1)' : 'rgba(255,255,255,0.04)',
-            border: `1px solid ${isSelected ? 'rgba(16,185,129,0.5)' : 'rgba(255,255,255,0.08)'}`,
-            borderRadius: 12,
+            padding: '18px 16px',
+            background: isSelected ? '#FFFFFF' : '#FAFAFA',
+            border: `1.5px solid ${isSelected ? '#111111' : '#E8E5DF'}`,
+            borderRadius: 16,
             cursor: 'pointer',
             textAlign: 'left',
-            transition: 'all 0.2s ease',
+            transition: 'all 0.18s ease',
             position: 'relative',
+            boxShadow: isSelected ? '0 4px 14px rgba(0,0,0,0.06)' : 'none',
           }}
         >
           {isSelected && (
             <div style={{
               position: 'absolute',
-              top: 8,
-              right: 8,
+              top: 10,
+              right: 10,
               width: 18,
               height: 18,
               borderRadius: '50%',
-              background: '#10B981',
+              background: '#111111',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-              <Check size={10} color="white" />
+              <Check size={10} color="white" strokeWidth={3} />
             </div>
           )}
-          <div style={{ fontSize: 20, marginBottom: 6 }}>{opt.emoji}</div>
-          <div style={{ fontSize: 13, fontWeight: 600, color: isSelected ? '#10B981' : 'rgba(255,255,255,0.85)', marginBottom: 4 }}>
+          <div style={{ fontSize: 22, marginBottom: 8 }}>{opt.emoji}</div>
+          <div style={{ fontSize: 14, fontWeight: 600, color: '#111111', marginBottom: 2 }}>
             {opt.label}
           </div>
-          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', lineHeight: 1.4 }}>
+          <div style={{ fontSize: 12, color: '#666666', lineHeight: 1.4 }}>
             {opt.desc}
           </div>
         </button>
@@ -116,15 +134,15 @@ const CardGrid = ({ options, selected, onToggle, multi = false }) => (
   </div>
 )
 
-// ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
+// ─── MAIN ONBOARDING PAGE COMPONENT ──────────────────────────────────────────
 
 const STEPS = [
-  { id: 'welcome', title: 'Welcome', icon: Leaf },
-  { id: 'identity', title: 'Who You Are', icon: User },
-  { id: 'target', title: 'Who You\'re Becoming', icon: Target },
-  { id: 'goals', title: 'Your Goals', icon: Sparkles },
-  { id: 'learning', title: 'How You Learn', icon: Brain },
-  { id: 'media', title: 'What You Enjoy', icon: Monitor },
+  { id: 'welcome', title: 'Welcome' },
+  { id: 'identity', title: 'Who You Are' },
+  { id: 'target', title: 'Who You\'re Becoming' },
+  { id: 'goals', title: 'Your Goals' },
+  { id: 'learning', title: 'How You Learn' },
+  { id: 'media', title: 'What You Enjoy' },
 ]
 
 export default function OnboardingPage() {
@@ -181,112 +199,198 @@ export default function OnboardingPage() {
     navigate('/dashboard')
   }
 
-  const progressPct = ((step) / (STEPS.length - 1)) * 100
-
   return (
-    <div className="gradient-hero" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
-      <div style={{ width: '100%', maxWidth: 600 }}>
+    <div style={{
+      width: '100%',
+      minHeight: '100vh',
+      backgroundColor: '#F9F7F2',
+      color: '#111111',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: '24px 32px 40px',
+      fontFamily: 'Inter, -apple-system, sans-serif',
+      boxSizing: 'border-box'
+    }}>
 
-        {/* Progress bar */}
-        <div style={{ marginBottom: 40 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <div style={{
-                width: 32,
-                height: 32,
-                borderRadius: 8,
-                background: 'linear-gradient(135deg, #10B981, #059669)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-                <Leaf size={16} color="white" />
-              </div>
-              <span style={{ fontFamily: 'DM Serif Display, serif', fontSize: 20, color: 'rgba(255,255,255,0.95)', letterSpacing: '-0.3px' }}>
-                Become
-              </span>
-              <span style={{ fontSize: 10, fontWeight: 700, fontFamily: 'monospace', padding: '2px 8px', borderRadius: 999, background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.5)', letterSpacing: '1px', textTransform: 'uppercase' }}>
-                AI
-              </span>
-            </div>
-            <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>
-              Step {step + 1} of {STEPS.length}
-            </span>
+      {/* TOP HEADER BAR */}
+      <header style={{
+        maxWidth: 760,
+        width: '100%',
+        margin: '0 auto',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingBottom: 24,
+        borderBottom: '1px solid #EAE6DF',
+      }}>
+        {/* Brand Logo (Black Circle with 'B' + BECOME text) */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{
+            width: 32,
+            height: 32,
+            borderRadius: '50%',
+            backgroundColor: '#111111',
+            color: '#FFFFFF',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 15,
+            fontWeight: 800,
+            letterSpacing: '-0.5px'
+          }}>
+            B
           </div>
-          <div className="progress-track">
-            <motion.div
-              className="progress-fill progress-emerald"
-              animate={{ width: `${progressPct}%` }}
-              transition={{ duration: 0.4, ease: 'easeOut' }}
-            />
-          </div>
-
-          {/* Step dots */}
-          <div style={{ display: 'flex', gap: 6, marginTop: 10, justifyContent: 'center' }}>
-            {STEPS.map((s, i) => (
-              <div key={i} style={{
-                width: i === step ? 20 : 6,
-                height: 6,
-                borderRadius: 3,
-                background: i <= step ? '#10B981' : 'rgba(255,255,255,0.1)',
-                transition: 'all 0.3s ease',
-              }} />
-            ))}
-          </div>
+          <span style={{
+            fontFamily: 'DM Serif Display, Georgia, serif',
+            fontSize: 18,
+            fontWeight: 700,
+            letterSpacing: '1px',
+            color: '#111111',
+            textTransform: 'uppercase'
+          }}>
+            BECOME
+          </span>
         </div>
 
-        {/* Step content */}
+        {/* Stepper Dots Indicator */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          {STEPS.map((_, i) => (
+            <React.Fragment key={i}>
+              <div style={{
+                width: i === step ? 10 : 8,
+                height: i === step ? 10 : 8,
+                borderRadius: '50%',
+                backgroundColor: i <= step ? '#111111' : '#E0DCD5',
+                transition: 'all 0.25s ease',
+              }} />
+              {i < STEPS.length - 1 && (
+                <div style={{
+                  width: 16,
+                  height: 2,
+                  backgroundColor: i < step ? '#111111' : '#E0DCD5',
+                  transition: 'all 0.25s ease',
+                }} />
+              )}
+            </React.Fragment>
+          ))}
+        </div>
+
+        {/* Step Count */}
+        <span style={{ fontSize: 13, color: '#666666', fontWeight: 500 }}>
+          Step {step + 1} of {STEPS.length}
+        </span>
+      </header>
+
+      {/* MAIN STEP CONTENT AREA */}
+      <main style={{
+        maxWidth: 540,
+        width: '100%',
+        margin: 'auto',
+        padding: '48px 0',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        textAlign: 'center'
+      }}>
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            style={{ width: '100%' }}
           >
-            {/* Welcome */}
+            {/* STEP 0: WELCOME */}
             {step === 0 && (
-              <div style={{ textAlign: 'center', marginBottom: 32 }}>
-                <motion.div
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  style={{ fontSize: 64, marginBottom: 20 }}
-                >
-                  🌱
-                </motion.div>
-                <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 40, color: 'rgba(255,255,255,0.95)', marginBottom: 12 }}>
+              <div style={{ textAlign: 'center' }}>
+                {/* Sprout Icon / Plant Line Art */}
+                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
+                  <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 22v-9" />
+                    <path d="M12 13C12 7.5 7.5 4 2 4c0 5.5 3.5 10 10 10z" />
+                    <path d="M12 10C12 5.5 15.5 2 21 2c0 5.5 -3.5 9 -9 9z" />
+                    <path d="M8 22h8" />
+                  </svg>
+                </div>
+
+                <h1 style={{
+                  fontFamily: 'DM Serif Display, Georgia, serif',
+                  fontSize: 40,
+                  fontWeight: 400,
+                  color: '#111111',
+                  lineHeight: 1.15,
+                  marginBottom: 16,
+                  letterSpacing: '-0.5px'
+                }}>
                   Your Growth Journey
                   <br />
-                  <em style={{ color: '#10B981' }}>Starts Here</em>
+                  <span style={{ fontStyle: 'italic', fontWeight: 400 }}>Starts Here</span>
                 </h1>
-                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: 16, lineHeight: 1.6, maxWidth: 440, margin: '0 auto 32px' }}>
-                  I'm your personal growth curator. I won't recommend what's popular — I'll recommend what's right for <em>you</em>, right now.
+
+                <p style={{
+                  color: '#555555',
+                  fontSize: 15,
+                  lineHeight: 1.6,
+                  maxWidth: 460,
+                  margin: '0 auto 36px'
+                }}>
+                  I'm your personal growth curator. I won't recommend what's popular — I'll recommend what's right for <em style={{ fontStyle: 'italic', color: '#111111' }}>you</em>, right now.
                 </p>
-                <div style={{ textAlign: 'left' }}>
-                  <label style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', fontWeight: 500, display: 'block', marginBottom: 8 }}>
+
+                <div style={{ textAlign: 'left', maxWidth: 440, margin: '0 auto' }}>
+                  <label style={{
+                    fontSize: 13,
+                    color: '#111111',
+                    fontWeight: 600,
+                    display: 'block',
+                    marginBottom: 10
+                  }}>
                     What should I call you?
                   </label>
                   <input
-                    className="input-field"
                     placeholder="Your first name"
                     value={data.name}
                     onChange={e => update('name', e.target.value)}
                     onKeyDown={e => e.key === 'Enter' && canAdvance() && handleNext()}
                     autoFocus
-                    style={{ fontSize: 16 }}
+                    style={{
+                      width: '100%',
+                      padding: '14px 18px',
+                      fontSize: 15,
+                      backgroundColor: '#FFFFFF',
+                      border: '1.5px solid #E0DDD6',
+                      borderRadius: 14,
+                      color: '#111111',
+                      outline: 'none',
+                      boxShadow: '0 2px 6px rgba(0,0,0,0.02)',
+                      transition: 'border-color 0.2s ease',
+                      boxSizing: 'border-box'
+                    }}
+                    onFocus={e => e.target.style.borderColor = '#111111'}
+                    onBlur={e => e.target.style.borderColor = '#E0DDD6'}
                   />
                 </div>
               </div>
             )}
 
-            {/* Current traits */}
+            {/* STEP 1: CURRENT TRAITS */}
             {step === 1 && (
-              <div style={{ marginBottom: 32 }}>
-                <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 32, color: 'rgba(255,255,255,0.95)', marginBottom: 8 }}>
-                  Who are you <em style={{ color: '#F59E0B' }}>right now?</em>
+              <div style={{ textAlign: 'center' }}>
+                <h2 style={{
+                  fontFamily: 'DM Serif Display, Georgia, serif',
+                  fontSize: 34,
+                  fontWeight: 400,
+                  color: '#111111',
+                  marginBottom: 10,
+                  lineHeight: 1.2
+                }}>
+                  Who are you <span style={{ fontStyle: 'italic' }}>right now?</span>
                 </h2>
-                <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: 14, lineHeight: 1.6, marginBottom: 24 }}>
-                  Honest self-awareness is the start of every transformation. Select the traits that honestly describe you today.
+                <p style={{ color: '#555555', fontSize: 14, lineHeight: 1.6, marginBottom: 20 }}>
+                  Honest self-awareness is the start of every transformation. Select the traits that describe you today.
                 </p>
                 <TagCloud
                   options={CURRENT_TRAIT_OPTIONS}
@@ -294,21 +398,28 @@ export default function OnboardingPage() {
                   onToggle={val => toggleTrait('currentTraits', val)}
                 />
                 {data.currentTraits.length > 0 && (
-                  <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', marginTop: 12 }}>
-                    {data.currentTraits.length} selected · There's no judgment here — only awareness.
+                  <p style={{ fontSize: 12, color: '#777777', marginTop: 14 }}>
+                    {data.currentTraits.length} selected · No judgment, only awareness.
                   </p>
                 )}
               </div>
             )}
 
-            {/* Target traits */}
+            {/* STEP 2: TARGET TRAITS */}
             {step === 2 && (
-              <div style={{ marginBottom: 32 }}>
-                <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 32, color: 'rgba(255,255,255,0.95)', marginBottom: 8 }}>
-                  Who do you want to <em style={{ color: '#10B981' }}>become?</em>
+              <div style={{ textAlign: 'center' }}>
+                <h2 style={{
+                  fontFamily: 'DM Serif Display, Georgia, serif',
+                  fontSize: 34,
+                  fontWeight: 400,
+                  color: '#111111',
+                  marginBottom: 10,
+                  lineHeight: 1.2
+                }}>
+                  Who do you want to <span style={{ fontStyle: 'italic' }}>become?</span>
                 </h2>
-                <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: 14, lineHeight: 1.6, marginBottom: 24 }}>
-                  Every piece of content I recommend will bridge the gap between who you are and who you're becoming. Pick up to 5.
+                <p style={{ color: '#555555', fontSize: 14, lineHeight: 1.6, marginBottom: 20 }}>
+                  Every piece of content recommended will bridge the gap. Pick up to 5 target traits.
                 </p>
                 <TagCloud
                   options={TARGET_TRAIT_OPTIONS}
@@ -318,13 +429,14 @@ export default function OnboardingPage() {
                 />
                 {data.targetTraits.length > 0 && (
                   <div style={{
-                    marginTop: 16,
+                    marginTop: 18,
                     padding: '12px 16px',
-                    background: 'rgba(16,185,129,0.06)',
-                    border: '1px solid rgba(16,185,129,0.15)',
-                    borderRadius: 10,
+                    background: '#FFFFFF',
+                    border: '1px solid #E5E2DC',
+                    borderRadius: 12,
+                    display: 'inline-block'
                   }}>
-                    <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', fontStyle: 'italic' }}>
+                    <p style={{ fontSize: 13, color: '#444444', fontStyle: 'italic', margin: 0 }}>
                       "I am becoming {data.targetTraits.slice(0, 2).map(t => t.toLowerCase()).join(' and ')}{data.targetTraits.length > 2 ? '...' : '.'}"
                     </p>
                   </div>
@@ -332,37 +444,65 @@ export default function OnboardingPage() {
               </div>
             )}
 
-            {/* Goals */}
+            {/* STEP 3: GOALS */}
             {step === 3 && (
-              <div style={{ marginBottom: 32 }}>
-                <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 32, color: 'rgba(255,255,255,0.95)', marginBottom: 8 }}>
-                  What do you want to <em style={{ color: '#8B5CF6' }}>achieve?</em>
+              <div style={{ textAlign: 'center' }}>
+                <h2 style={{
+                  fontFamily: 'DM Serif Display, Georgia, serif',
+                  fontSize: 34,
+                  fontWeight: 400,
+                  color: '#111111',
+                  marginBottom: 10,
+                  lineHeight: 1.2
+                }}>
+                  What do you want to <span style={{ fontStyle: 'italic' }}>achieve?</span>
                 </h2>
-                <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: 14, lineHeight: 1.6, marginBottom: 24 }}>
-                  Be specific. The more I know about what you're working toward, the more precisely I can curate your path.
+                <p style={{ color: '#555555', fontSize: 14, lineHeight: 1.6, marginBottom: 20 }}>
+                  Be specific about your immediate focus and goals.
                 </p>
                 <textarea
-                  className="input-field"
-                  placeholder="e.g. Build a daily writing habit and finish my book draft. Stop procrastinating on creative work. Become more focused and consistent in my work..."
+                  placeholder="e.g. Build a daily writing habit, master deep work, and stop procrastinating on important projects..."
                   value={data.goals}
                   onChange={e => update('goals', e.target.value)}
                   rows={4}
-                  style={{ fontSize: 14 }}
+                  style={{
+                    width: '100%',
+                    padding: '14px 18px',
+                    fontSize: 14,
+                    backgroundColor: '#FFFFFF',
+                    border: '1.5px solid #E0DDD6',
+                    borderRadius: 14,
+                    color: '#111111',
+                    outline: 'none',
+                    lineHeight: 1.6,
+                    resize: 'vertical',
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.02)',
+                    boxSizing: 'border-box'
+                  }}
+                  onFocus={e => e.target.style.borderColor = '#111111'}
+                  onBlur={e => e.target.style.borderColor = '#E0DDD6'}
                 />
-                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.25)', marginTop: 8 }}>
-                  {data.goals.length} characters · minimum 10
+                <p style={{ fontSize: 12, color: '#888888', marginTop: 8 }}>
+                  {data.goals.length} characters (minimum 10)
                 </p>
               </div>
             )}
 
-            {/* Learning style */}
+            {/* STEP 4: LEARNING STYLE */}
             {step === 4 && (
-              <div style={{ marginBottom: 32 }}>
-                <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 32, color: 'rgba(255,255,255,0.95)', marginBottom: 8 }}>
-                  How do you learn <em style={{ color: '#38BDF8' }}>best?</em>
+              <div style={{ textAlign: 'center' }}>
+                <h2 style={{
+                  fontFamily: 'DM Serif Display, Georgia, serif',
+                  fontSize: 34,
+                  fontWeight: 400,
+                  color: '#111111',
+                  marginBottom: 10,
+                  lineHeight: 1.2
+                }}>
+                  How do you learn <span style={{ fontStyle: 'italic' }}>best?</span>
                 </h2>
-                <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: 14, lineHeight: 1.6, marginBottom: 24 }}>
-                  Select all that apply — most of us learn through multiple modalities.
+                <p style={{ color: '#555555', fontSize: 14, lineHeight: 1.6, marginBottom: 16 }}>
+                  Select all modalities that suit your learning style.
                 </p>
                 <CardGrid
                   options={LEARNING_STYLE_OPTIONS}
@@ -373,14 +513,21 @@ export default function OnboardingPage() {
               </div>
             )}
 
-            {/* Media + length preference */}
+            {/* STEP 5: MEDIA PREFERENCES */}
             {step === 5 && (
-              <div style={{ marginBottom: 32 }}>
-                <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 32, color: 'rgba(255,255,255,0.95)', marginBottom: 8 }}>
-                  What content do you <em style={{ color: '#F43F5E' }}>enjoy?</em>
+              <div style={{ textAlign: 'center' }}>
+                <h2 style={{
+                  fontFamily: 'DM Serif Display, Georgia, serif',
+                  fontSize: 34,
+                  fontWeight: 400,
+                  color: '#111111',
+                  marginBottom: 10,
+                  lineHeight: 1.2
+                }}>
+                  What content do you <span style={{ fontStyle: 'italic' }}>enjoy?</span>
                 </h2>
-                <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: 14, lineHeight: 1.6, marginBottom: 20 }}>
-                  Select your preferred formats (choose all that apply):
+                <p style={{ color: '#555555', fontSize: 14, lineHeight: 1.6, marginBottom: 16 }}>
+                  Select your preferred formats and ideal session length.
                 </p>
                 <CardGrid
                   options={MEDIA_OPTIONS}
@@ -389,31 +536,32 @@ export default function OnboardingPage() {
                   multi
                 />
 
-                <div style={{ marginTop: 24 }}>
-                  <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)', marginBottom: 12 }}>
-                    How long do you prefer content to be?
-                  </p>
+                <div style={{ marginTop: 24, textAlign: 'left' }}>
+                  <label style={{ fontSize: 13, fontWeight: 600, color: '#111111', display: 'block', marginBottom: 10, textAlign: 'center' }}>
+                    Preferred session length
+                  </label>
                   <div style={{ display: 'flex', gap: 10 }}>
                     {LENGTH_OPTIONS.map(opt => (
                       <button
                         key={opt.id}
                         onClick={() => update('contentLength', opt.id)}
+                        type="button"
                         style={{
                           flex: 1,
-                          padding: '12px 8px',
-                          background: data.contentLength === opt.id ? 'rgba(16,185,129,0.1)' : 'rgba(255,255,255,0.04)',
-                          border: `1px solid ${data.contentLength === opt.id ? 'rgba(16,185,129,0.5)' : 'rgba(255,255,255,0.08)'}`,
-                          borderRadius: 10,
+                          padding: '12px 10px',
+                          background: data.contentLength === opt.id ? '#FFFFFF' : '#FAFAFA',
+                          border: `1.5px solid ${data.contentLength === opt.id ? '#111111' : '#E5E2DC'}`,
+                          borderRadius: 14,
                           cursor: 'pointer',
                           textAlign: 'center',
-                          transition: 'all 0.2s',
+                          transition: 'all 0.18s ease',
                         }}
                       >
                         <div style={{ fontSize: 18, marginBottom: 4 }}>{opt.emoji}</div>
-                        <div style={{ fontSize: 12, fontWeight: 600, color: data.contentLength === opt.id ? '#10B981' : 'rgba(255,255,255,0.7)' }}>
+                        <div style={{ fontSize: 13, fontWeight: 600, color: '#111111' }}>
                           {opt.label}
                         </div>
-                        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', marginTop: 2 }}>
+                        <div style={{ fontSize: 11, color: '#777777', marginTop: 2 }}>
                           {opt.desc}
                         </div>
                       </button>
@@ -424,40 +572,82 @@ export default function OnboardingPage() {
             )}
           </motion.div>
         </AnimatePresence>
+      </main>
 
-        {/* Navigation */}
-        <div style={{ display: 'flex', justifyContent: step > 0 ? 'space-between' : 'flex-end', alignItems: 'center', marginTop: 8 }}>
-          {step > 0 && (
-            <button
-              onClick={() => setStep(s => s - 1)}
-              className="btn-ghost"
-            >
-              <ArrowLeft size={16} />
-              Back
-            </button>
-          )}
-          <motion.button
-            onClick={handleNext}
-            disabled={!canAdvance()}
-            className="btn-primary"
-            whileHover={{ scale: canAdvance() ? 1.02 : 1 }}
-            whileTap={{ scale: canAdvance() ? 0.98 : 1 }}
-            style={{ opacity: canAdvance() ? 1 : 0.4, cursor: canAdvance() ? 'pointer' : 'not-allowed' }}
+      {/* FOOTER ACTIONS BAR */}
+      <footer style={{
+        maxWidth: 760,
+        width: '100%',
+        margin: '0 auto',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: step > 0 ? 'space-between' : 'flex-end',
+        paddingTop: 24,
+        borderTop: '1px solid #EAE6DF',
+      }}>
+        {step > 0 && (
+          <button
+            onClick={() => setStep(s => s - 1)}
+            type="button"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              padding: '10px 20px',
+              backgroundColor: '#FFFFFF',
+              color: '#111111',
+              border: '1px solid #E0DDD6',
+              borderRadius: 999,
+              fontSize: 14,
+              fontWeight: 600,
+              cursor: 'pointer',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
+              transition: 'all 0.18s ease',
+            }}
+            onMouseEnter={e => e.currentTarget.style.backgroundColor = '#F5F3ED'}
+            onMouseLeave={e => e.currentTarget.style.backgroundColor = '#FFFFFF'}
           >
-            {step === STEPS.length - 1 ? (
-              <>
-                <Sparkles size={16} />
-                Begin My Journey
-              </>
-            ) : (
-              <>
-                Continue
-                <ArrowRight size={16} />
-              </>
-            )}
-          </motion.button>
-        </div>
-      </div>
+            <ArrowLeft size={16} />
+            Back
+          </button>
+        )}
+
+        <button
+          onClick={handleNext}
+          disabled={!canAdvance()}
+          type="button"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            padding: '12px 26px',
+            backgroundColor: canAdvance() ? '#111111' : '#CCCCCC',
+            color: '#FFFFFF',
+            border: 'none',
+            borderRadius: 999,
+            fontSize: 14,
+            fontWeight: 600,
+            cursor: canAdvance() ? 'pointer' : 'not-allowed',
+            opacity: canAdvance() ? 1 : 0.6,
+            boxShadow: canAdvance() ? '0 4px 14px rgba(0,0,0,0.15)' : 'none',
+            transition: 'all 0.18s ease',
+          }}
+          onMouseEnter={e => { if (canAdvance()) e.currentTarget.style.backgroundColor = '#222222' }}
+          onMouseLeave={e => { if (canAdvance()) e.currentTarget.style.backgroundColor = '#111111' }}
+        >
+          {step === STEPS.length - 1 ? (
+            <>
+              <Sparkles size={16} />
+              Begin My Journey
+            </>
+          ) : (
+            <>
+              Continue
+              <ArrowRight size={16} />
+            </>
+          )}
+        </button>
+      </footer>
     </div>
   )
 }

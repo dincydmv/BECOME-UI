@@ -11,7 +11,7 @@
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* ===== COLOR PALETTE ===== */
-  --color-bg: #09090B;
+  --color-bg: #F9F7F2;
   --color-bg-2: #111114;
   --color-bg-3: #18181c;
   --color-surface: rgba(255, 255, 255, 0.04);
@@ -42,15 +42,15 @@
   --color-sky-glow: rgba(56, 189, 248, 0.15);
   --color-sky-subtle: rgba(56, 189, 248, 0.08);
 
-  --color-text-primary: rgba(255, 255, 255, 0.95);
-  --color-text-secondary: rgba(255, 255, 255, 0.6);
-  --color-text-tertiary: rgba(255, 255, 255, 0.35);
+  --color-text-primary: #111111;
+  --color-text-secondary: rgba(0, 0, 0, 0.6);
+  --color-text-tertiary: rgba(0, 0, 0, 0.35);
 
   --nav-width: 240px;
   --nav-width-collapsed: 72px;
 
   font-family: var(--font-sans);
-  background-color: var(--color-bg);
+  background-color: #F9F7F2;
   color: var(--color-text-primary);
   min-height: 100vh;
   width: 100%;
@@ -58,6 +58,7 @@
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   display: flex;
+  flex-direction: column;
 }
 
 .pvt-agent-root h1,
