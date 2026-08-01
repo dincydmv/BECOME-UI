@@ -17,7 +17,7 @@ import VideoDemoModal from './components/VideoDemoModal';
 import PvtAgentApp from './PvtAgentApp.jsx';
 
 export default function App() {
-  const [currentView, setCurrentView] = useState('landing'); // 'landing' | 'agent'
+  const [currentView, setCurrentView] = useState('agent'); // 'agent' as default view so dashboard opens directly!
   const [isDemoOpen, setIsDemoOpen] = useState(false);
   const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
 
@@ -31,12 +31,12 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // When any CTA is clicked → render pvt-agent app
+  // When agent view is active → render pvt-agent app directly
   if (currentView === 'agent') {
     return <PvtAgentApp onBackToHome={handleBackToHome} />;
   }
 
-  // Otherwise render the landing page
+  // Otherwise render landing page
   return (
     <div className="min-h-screen bg-[#F6F4EF] text-[#111111] font-sans relative selection:bg-black selection:text-white">
       <div className="paper-grain" />
