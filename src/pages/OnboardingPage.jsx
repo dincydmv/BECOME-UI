@@ -190,7 +190,7 @@ export default function OnboardingPage() {
         {/* Progress bar */}
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
               <div style={{
                 width: 32,
                 height: 32,
@@ -202,8 +202,11 @@ export default function OnboardingPage() {
               }}>
                 <Leaf size={16} color="white" />
               </div>
-              <span style={{ fontFamily: 'DM Serif Display, serif', fontSize: 18, color: 'rgba(255,255,255,0.9)' }}>
-                BECOME
+              <span style={{ fontFamily: 'DM Serif Display, serif', fontSize: 20, color: 'rgba(255,255,255,0.95)', letterSpacing: '-0.3px' }}>
+                Become
+              </span>
+              <span style={{ fontSize: 10, fontWeight: 700, fontFamily: 'monospace', padding: '2px 8px', borderRadius: 999, background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.5)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                AI
               </span>
             </div>
             <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>

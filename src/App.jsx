@@ -28,7 +28,7 @@ export default function App() {
 
   // When "Start Your Journey" / any CTA is clicked → render pvt-agent app
   if (currentView === 'agent') {
-    return <PvtAgentApp />;
+    return <PvtAgentApp onBackToHome={handleBackToHome} />;
   }
 
   // Otherwise render the landing page
