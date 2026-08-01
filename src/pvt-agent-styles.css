@@ -1,6 +1,6 @@
 /**
  * pvt-agent-styles.css
- * All styles from the pvt-agent project — dark mode growth curator UI
+ * Dark mode glassmorphism curator UI — matching Screenshot #3
  */
 
 /* ===== FONTS ===== */
@@ -10,19 +10,19 @@
   --font-serif: 'DM Serif Display', Georgia, serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
-  /* ===== COLOR PALETTE ===== */
-  --color-bg: #F9F7F2;
+  /* ===== COLOR PALETTE (DARK GLASS) ===== */
+  --color-bg: #09090B;
   --color-bg-2: #111114;
   --color-bg-3: #18181c;
-  --color-surface: rgba(255, 255, 255, 0.04);
-  --color-surface-hover: rgba(255, 255, 255, 0.07);
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-hover: rgba(255, 255, 255, 0.15);
+  --color-surface: rgba(255, 255, 255, 0.03);
+  --color-surface-hover: rgba(255, 255, 255, 0.06);
+  --color-border: rgba(255, 255, 255, 0.07);
+  --color-border-hover: rgba(255, 255, 255, 0.14);
 
   --color-emerald: #10B981;
   --color-emerald-dim: #059669;
-  --color-emerald-glow: rgba(16, 185, 129, 0.15);
-  --color-emerald-subtle: rgba(16, 185, 129, 0.08);
+  --color-emerald-glow: rgba(16, 185, 129, 0.2);
+  --color-emerald-subtle: rgba(16, 185, 129, 0.1);
 
   --color-amber: #F59E0B;
   --color-amber-dim: #D97706;
@@ -32,7 +32,7 @@
   --color-violet: #8B5CF6;
   --color-violet-dim: #7C3AED;
   --color-violet-glow: rgba(139, 92, 246, 0.15);
-  --color-violet-subtle: rgba(139, 92, 246, 0.08);
+  --color-violet-subtle: rgba(139, 92, 246, 0.1);
 
   --color-rose: #F43F5E;
   --color-rose-glow: rgba(244, 63, 94, 0.15);
@@ -42,15 +42,15 @@
   --color-sky-glow: rgba(56, 189, 248, 0.15);
   --color-sky-subtle: rgba(56, 189, 248, 0.08);
 
-  --color-text-primary: #111111;
-  --color-text-secondary: rgba(0, 0, 0, 0.6);
-  --color-text-tertiary: rgba(0, 0, 0, 0.35);
+  --color-text-primary: rgba(255, 255, 255, 0.95);
+  --color-text-secondary: rgba(255, 255, 255, 0.55);
+  --color-text-tertiary: rgba(255, 255, 255, 0.35);
 
   --nav-width: 240px;
   --nav-width-collapsed: 72px;
 
   font-family: var(--font-sans);
-  background-color: #F9F7F2;
+  background-color: var(--color-bg);
   color: var(--color-text-primary);
   min-height: 100vh;
   width: 100%;
@@ -73,7 +73,7 @@
 .pvt-agent-root .glass-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 16px;
+  border-radius: 20px;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   transition: border-color 0.2s ease, background 0.2s ease;
@@ -155,164 +155,6 @@
   border-color: var(--color-border-hover);
 }
 
-.pvt-agent-root .btn-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  color: var(--color-text-secondary);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.pvt-agent-root .btn-icon:hover {
-  background: var(--color-surface-hover);
-  color: var(--color-text-primary);
-  border-color: var(--color-border-hover);
-}
-
-/* ===== BADGES ===== */
-.pvt-agent-root .badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
-.pvt-agent-root .badge-emerald { background: var(--color-emerald-subtle); color: var(--color-emerald); border: 1px solid rgba(16,185,129,0.2); }
-.pvt-agent-root .badge-amber { background: var(--color-amber-subtle); color: var(--color-amber); border: 1px solid rgba(245,158,11,0.2); }
-.pvt-agent-root .badge-violet { background: var(--color-violet-subtle); color: var(--color-violet); border: 1px solid rgba(139,92,246,0.2); }
-.pvt-agent-root .badge-rose { background: var(--color-rose-subtle); color: var(--color-rose); border: 1px solid rgba(244,63,94,0.2); }
-.pvt-agent-root .badge-sky { background: var(--color-sky-subtle); color: var(--color-sky); border: 1px solid rgba(56,189,248,0.2); }
-
-/* ===== PROGRESS BAR ===== */
-.pvt-agent-root .progress-track {
-  width: 100%;
-  height: 4px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 99px;
-  overflow: hidden;
-}
-.pvt-agent-root .progress-fill {
-  height: 100%;
-  border-radius: 99px;
-  transition: width 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-}
-.pvt-agent-root .progress-emerald { background: linear-gradient(90deg, var(--color-emerald-dim), var(--color-emerald)); }
-.pvt-agent-root .progress-amber { background: linear-gradient(90deg, var(--color-amber-dim), var(--color-amber)); }
-.pvt-agent-root .progress-violet { background: linear-gradient(90deg, var(--color-violet-dim), var(--color-violet)); }
-
-/* ===== INPUT ===== */
-.pvt-agent-root .input-field {
-  width: 100%;
-  padding: 12px 16px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  color: var(--color-text-primary);
-  font-family: var(--font-sans);
-  font-size: 14px;
-  outline: none;
-  transition: border-color 0.2s ease, background 0.2s ease;
-}
-.pvt-agent-root .input-field::placeholder { color: var(--color-text-tertiary); }
-.pvt-agent-root .input-field:focus {
-  border-color: var(--color-emerald);
-  background: rgba(16,185,129,0.04);
-}
-.pvt-agent-root textarea.input-field {
-  resize: vertical;
-  min-height: 80px;
-  line-height: 1.6;
-}
-
-/* ===== TAG SELECTOR ===== */
-.pvt-agent-root .tag-option {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--color-border);
-  border-radius: 999px;
-  font-size: 13px;
-  color: var(--color-text-secondary);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  user-select: none;
-}
-.pvt-agent-root .tag-option:hover {
-  border-color: var(--color-border-hover);
-  color: var(--color-text-primary);
-  background: rgba(255,255,255,0.07);
-}
-.pvt-agent-root .tag-option.selected {
-  background: var(--color-emerald-subtle);
-  border-color: rgba(16,185,129,0.4);
-  color: var(--color-emerald);
-}
-
-/* ===== ANIMATIONS ===== */
-@keyframes pvt-fadeInUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes pvt-fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-@keyframes pvt-pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(16,185,129,0.2); }
-  50%       { box-shadow: 0 0 40px rgba(16,185,129,0.4); }
-}
-@keyframes pvt-shimmer {
-  0%   { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-@keyframes pvt-thinking-dot {
-  0%, 80%, 100% { transform: scale(0.8); opacity: 0.4; }
-  40%           { transform: scale(1.2); opacity: 1; }
-}
-@keyframes pvt-float {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-6px); }
-}
-@keyframes pvt-spin-slow {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-.pvt-agent-root .animate-fade-in { animation: pvt-fadeIn 0.4s ease forwards; }
-.pvt-agent-root .animate-fade-in-up { animation: pvt-fadeInUp 0.5s ease forwards; }
-.pvt-agent-root .animate-pulse-glow { animation: pvt-pulse-glow 2s ease-in-out infinite; }
-.pvt-agent-root .animate-float { animation: pvt-float 3s ease-in-out infinite; }
-.pvt-agent-root .animate-spin-slow { animation: pvt-spin-slow 8s linear infinite; }
-
-.pvt-agent-root .thinking-dot:nth-child(1) { animation: pvt-thinking-dot 1.4s ease-in-out 0s infinite; }
-.pvt-agent-root .thinking-dot:nth-child(2) { animation: pvt-thinking-dot 1.4s ease-in-out 0.2s infinite; }
-.pvt-agent-root .thinking-dot:nth-child(3) { animation: pvt-thinking-dot 1.4s ease-in-out 0.4s infinite; }
-
-.pvt-agent-root .shimmer-line {
-  position: relative;
-  overflow: hidden;
-  background: rgba(255,255,255,0.06);
-  border-radius: 8px;
-}
-.pvt-agent-root .shimmer-line::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-  animation: pvt-shimmer 1.6s infinite;
-}
-
 /* ===== LAYOUT ===== */
 .pvt-agent-root .page-layout {
   display: flex;
@@ -326,40 +168,11 @@
   transition: margin-left 0.3s ease;
 }
 .pvt-agent-root .page-inner {
-  max-width: 900px;
+  max-width: 960px;
   margin: 0 auto;
   padding: 48px 40px;
 }
 
-/* ===== STAT CARDS ===== */
-.pvt-agent-root .stat-card {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 20px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 14px;
-  transition: all 0.2s ease;
-}
-.pvt-agent-root .stat-card:hover {
-  border-color: var(--color-border-hover);
-  background: var(--color-surface-hover);
-}
-.pvt-agent-root .stat-value {
-  font-family: var(--font-serif);
-  font-size: 32px;
-  line-height: 1;
-}
-.pvt-agent-root .stat-label {
-  font-size: 12px;
-  color: var(--color-text-tertiary);
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
-
-/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .pvt-agent-root .main-content {
     margin-left: 0;

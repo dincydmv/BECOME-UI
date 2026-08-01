@@ -1,14 +1,13 @@
 /**
- * Navigation.jsx — Sidebar navigation for BECOME
+ * Navigation.jsx — Dark Mode Glass Sidebar (Matches Screenshot #1 & #3)
  */
 
 import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  Sparkles, LayoutDashboard, PlayCircle, BookOpen,
-  ChevronLeft, ChevronRight, Leaf, Settings, RotateCcw,
-  ArrowLeft
+  LayoutDashboard, PlayCircle, BookOpen, ChevronLeft, ChevronRight,
+  Leaf, RotateCcw, ArrowLeft
 } from 'lucide-react'
 import { useApp } from '../store/AppContext.jsx'
 import { useBackToHome } from '../PvtAgentApp.jsx'
@@ -23,10 +22,10 @@ const MomentumDot = ({ momentum }) => {
   const colors = { low: '#F43F5E', medium: '#F59E0B', high: '#10B981' }
   return (
     <span style={{
-      width: 8, height: 8, borderRadius: '50%',
-      background: colors[momentum] || colors.medium,
+      width: 7, height: 7, borderRadius: '50%',
+      background: colors[momentum] || colors.low,
       display: 'inline-block',
-      boxShadow: `0 0 6px ${colors[momentum] || colors.medium}`,
+      boxShadow: `0 0 6px ${colors[momentum] || colors.low}`,
     }} />
   )
 }
@@ -44,6 +43,8 @@ export default function Navigation() {
     }
   }
 
+  const userName = profile?.name || 'neha'
+
   return (
     <motion.nav
       animate={{ width: collapsed ? 72 : 240 }}
@@ -55,9 +56,10 @@ export default function Navigation() {
         backdropFilter: 'blur(20px)',
         display: 'flex', flexDirection: 'column',
         zIndex: 100, overflow: 'hidden',
+        boxSizing: 'border-box'
       }}
     >
-      {/* Brand Logo */}
+      {/* Brand Logo Header */}
       <div style={{
         padding: collapsed ? '20px 0' : '22px 20px',
         display: 'flex', alignItems: 'center', gap: 10,
@@ -65,12 +67,12 @@ export default function Navigation() {
         borderBottom: '1px solid rgba(255,255,255,0.06)',
       }}>
         <div style={{
-          width: 34, height: 34, borderRadius: 10,
+          width: 32, height: 32, borderRadius: 10,
           background: 'linear-gradient(135deg, #10B981, #059669)',
           display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
           boxShadow: '0 4px 12px rgba(16,185,129,0.3)',
         }}>
-          <Leaf size={17} color="white" />
+          <Leaf size={16} color="white" />
         </div>
         <AnimatePresence>
           {!collapsed && (
@@ -82,7 +84,7 @@ export default function Navigation() {
               style={{ display: 'flex', alignItems: 'center', gap: 6 }}
             >
               <span style={{
-                fontFamily: 'DM Serif Display, serif',
+                fontFamily: 'DM Serif Display, Georgia, serif',
                 fontSize: 20, color: 'rgba(255,255,255,0.95)', letterSpacing: '-0.3px',
               }}>
                 Become
@@ -102,7 +104,7 @@ export default function Navigation() {
         </AnimatePresence>
       </div>
 
-      {/* User Info */}
+      {/* User Info Header */}
       {profile && (
         <div style={{
           padding: collapsed ? '14px 0' : '14px 20px',
@@ -116,18 +118,18 @@ export default function Navigation() {
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             flexShrink: 0, fontSize: 13, fontWeight: 600, color: 'white',
           }}>
-            {(profile.name || 'U')[0].toUpperCase()}
+            {userName[0].toUpperCase()}
           </div>
           <AnimatePresence>
             {!collapsed && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
                 <div style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.9)' }}>
-                  {profile.name || 'Explorer'}
+                  {userName}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
-                  <MomentumDot momentum={growthState?.momentum} />
+                  <MomentumDot momentum={growthState?.momentum || 'low'} />
                   <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', textTransform: 'capitalize' }}>
-                    {growthState?.momentum || 'medium'} momentum
+                    {growthState?.momentum || 'Low'} Momentum
                   </span>
                 </div>
               </motion.div>
@@ -136,7 +138,7 @@ export default function Navigation() {
         </div>
       )}
 
-      {/* Nav Items */}
+      {/* Nav Links */}
       <div style={{ flex: 1, padding: '12px 0', overflowY: 'auto' }}>
         {NAV_ITEMS.map(({ to, icon: Icon, label }) => (
           <NavLink
@@ -148,7 +150,7 @@ export default function Navigation() {
               justifyContent: collapsed ? 'center' : 'flex-start',
               margin: '2px 8px', borderRadius: 10,
               textDecoration: 'none', transition: 'all 0.15s ease',
-              background: isActive ? 'rgba(16,185,129,0.1)' : 'transparent',
+              background: isActive ? 'rgba(16,185,129,0.12)' : 'transparent',
               color: isActive ? '#10B981' : 'rgba(255,255,255,0.5)',
               borderLeft: isActive && !collapsed ? '2px solid #10B981' : '2px solid transparent',
             })}
@@ -171,7 +173,7 @@ export default function Navigation() {
         ))}
       </div>
 
-      {/* Trust Score bar */}
+      {/* Trust Score Bar Widget */}
       {growthState && !collapsed && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{
           margin: '0 12px 12px',
@@ -181,16 +183,20 @@ export default function Navigation() {
           border: '1px solid rgba(255,255,255,0.06)',
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-            <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Trust Score</span>
-            <span style={{ fontSize: 12, fontWeight: 600, color: '#10B981' }}>{growthState.trustScore}</span>
+            <span style={{ fontSize: 10, fontFamily: 'monospace', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              TRUST SCORE
+            </span>
+            <span style={{ fontSize: 12, fontWeight: 600, color: '#10B981' }}>
+              {growthState.trustScore ?? 52}
+            </span>
           </div>
           <div className="progress-track">
-            <div className="progress-fill progress-emerald" style={{ width: `${growthState.trustScore}%` }} />
+            <div className="progress-fill progress-emerald" style={{ width: `${growthState.trustScore ?? 52}%` }} />
           </div>
         </motion.div>
       )}
 
-      {/* Bottom actions */}
+      {/* Bottom Footer Actions */}
       <div style={{
         padding: collapsed ? '12px 0' : '12px',
         borderTop: '1px solid rgba(255,255,255,0.06)',
@@ -200,11 +206,11 @@ export default function Navigation() {
         alignItems: 'center',
         gap: 8,
       }}>
-        {/* Back to landing page */}
         {!collapsed && (
           <button
             onClick={backToHome}
             title="Back to landing page"
+            type="button"
             style={{
               background: 'rgba(255,255,255,0.04)',
               border: '1px solid rgba(255,255,255,0.08)',
@@ -223,9 +229,8 @@ export default function Navigation() {
           </button>
         )}
 
-        {/* Reset data */}
         {!collapsed && (
-          <button onClick={handleReset} title="Reset data" style={{
+          <button onClick={handleReset} title="Reset data" type="button" style={{
             background: 'none', border: 'none', color: 'rgba(255,255,255,0.25)',
             cursor: 'pointer', padding: '6px', borderRadius: 6,
             display: 'flex', alignItems: 'center', transition: 'color 0.15s',
@@ -237,9 +242,9 @@ export default function Navigation() {
           </button>
         )}
 
-        {/* Collapse toggle */}
         <button
           onClick={() => setCollapsed(c => !c)}
+          type="button"
           style={{
             background: 'rgba(255,255,255,0.05)',
             border: '1px solid rgba(255,255,255,0.08)',
@@ -248,8 +253,6 @@ export default function Navigation() {
             cursor: 'pointer', padding: '6px 8px',
             display: 'flex', alignItems: 'center', transition: 'all 0.15s',
           }}
-          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.09)'; e.currentTarget.style.color = 'rgba(255,255,255,0.9)' }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = 'rgba(255,255,255,0.5)' }}
         >
           {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
         </button>
