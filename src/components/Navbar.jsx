@@ -38,10 +38,10 @@ export default function Navbar({ onOpenModal }) {
         {/* Logo */}
         <a href="#" className="flex items-center gap-3 group">
           <div className="w-8 h-8 rounded-full bg-black text-[#F6F4EF] flex items-center justify-center font-editorial font-bold text-sm tracking-wider transition-transform duration-300 group-hover:scale-110">
-            FS
+            B
           </div>
           <span className="font-editorial text-xl font-bold tracking-tight text-[#111111]">
-            FutureSelf <span className="font-sans text-xs font-semibold px-2 py-0.5 rounded-full bg-black/5 border border-black/10 uppercase tracking-widest text-[#6E6E6E] ml-1">AI</span>
+            Become <span className="font-sans text-xs font-semibold px-2 py-0.5 rounded-full bg-black/5 border border-black/10 uppercase tracking-widest text-[#6E6E6E] ml-1">AI</span>
           </span>
         </a>
 

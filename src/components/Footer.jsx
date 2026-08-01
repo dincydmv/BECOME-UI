@@ -9,10 +9,10 @@ export default function Footer({ onOpenModal }) {
         <div>
           <div className="flex items-center gap-3 mb-3">
             <div className="w-8 h-8 rounded-full bg-black text-[#F6F4EF] flex items-center justify-center font-editorial font-bold text-sm">
-              FS
+              B
             </div>
             <span className="font-editorial text-2xl font-bold tracking-tight">
-              FutureSelf AI
+              Become AI
             </span>
           </div>
           <p className="text-xs text-[#6E6E6E] max-w-sm font-light leading-relaxed">
@@ -77,7 +77,7 @@ export default function Footer({ onOpenModal }) {
 
       {/* Copyright Line */}
       <div className="max-w-7xl mx-auto pt-10 mt-10 border-t border-black/10 flex flex-col sm:flex-row items-center justify-between text-[11px] font-mono text-[#6E6E6E] gap-2">
-        <span>© {new Date().getFullYear()} FutureSelf AI Inc. All rights reserved.</span>
+        <span>© {new Date().getFullYear()} Become AI Inc. All rights reserved.</span>
         <span>Crafted with Minimalist Precision • Awwwards Grade</span>
       </div>
     </footer>
