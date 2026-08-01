@@ -241,28 +241,3 @@ Once the intervention has been selected, the system curates the most relevant co
 └── README.md
 ```
 
----
-
-## Future Improvements
-
-- Adaptive learning paths
-- AI mentor conversations
-- Calendar integration
-- Habit tracking
-- Community recommendations
-- Voice-based coaching
-- Long-term behavioral analytics
-
----
-
-## Vision
-
-The objective of this project is to demonstrate how recommendation systems can move beyond optimizing attention and instead support intentional personal growth through persistent memory, behavioral understanding, and agentic AI.
-
-Rather than asking:
-
-> *"What will this person watch next?"*
-
-the system asks:
-
-> *"What does this person need today to become the person they aspire to be?"*
